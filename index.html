@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>V-Air - Dashboard Monitoring Kualitas Udara</title>
+  <title>Dashboard Monitoring Kualitas Udara</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -25,15 +24,15 @@
     }
 
     header {
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: 35px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
       margin-bottom: 10px;
     }
@@ -51,59 +50,64 @@
     .status-box {
       border-radius: 25px;
       padding: 25px;
-      margin-bottom: 12px;
+      margin-bottom: 25px;
       font-size: 22px;
       font-weight: 700;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.3);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
     }
 
     .aman {
-      background: rgba(34,197,94,.15);
+      background: rgba(34, 197, 94, .15);
       border: 1px solid #22c55e;
       color: #4ade80;
     }
 
     .bahaya {
-      background: rgba(239,68,68,.15);
+      background: rgba(239, 68, 68, .15);
       border: 1px solid #ef4444;
       color: #f87171;
     }
 
     .menunggu {
-      background: rgba(59,130,246,.15);
+      background: rgba(59, 130, 246, .15);
       border: 1px solid #3b82f6;
       color: #60a5fa;
     }
 
-    .ispu-panel, .card, .chart-card, .info-bar {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
+    .ispu-panel,
+    .card,
+    .chart-card,
+    .info-bar {
+      background: rgba(255, 255, 255, .06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, .08);
       border-radius: 24px;
-      box-shadow: 0 10px 35px rgba(0,0,0,.25);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .25);
     }
 
     .ispu-panel {
       padding: 30px;
-      margin: 25px 0;
+      margin-bottom: 25px;
     }
 
     .ispu-panel h2 {
       text-align: center;
       margin-bottom: 25px;
+      color: #fff;
       font-size: 24px;
     }
 
     .ispu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 25px;
     }
 
     .ispu-title {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
       margin-bottom: 10px;
       font-weight: 600;
     }
@@ -119,20 +123,20 @@
       height: 100%;
       width: 0%;
       border-radius: 50px;
-      transition: width .5s ease;
+      transition: 1s ease;
+      box-shadow: 0 0 15px currentColor;
     }
 
     .ispu-labels {
       margin-top: 8px;
       display: flex;
       justify-content: space-between;
-      gap: 5px;
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
 
@@ -142,20 +146,22 @@
     }
 
     .card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
     }
 
     .card h3 {
       color: #94a3b8;
       margin-bottom: 12px;
-      font-size: 16px;
     }
 
     .value {
-      font-size: 38px;
+      font-size: 42px;
       font-weight: 800;
-      color: #38bdf8;
-      overflow-wrap: anywhere;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
     }
 
     .unit {
@@ -165,22 +171,21 @@
     .chart-section {
       margin-top: 25px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
       gap: 20px;
     }
 
     .chart-card {
       padding: 20px;
-      min-width: 0;
     }
 
     .chart-card h3 {
       margin-bottom: 15px;
+      color: #fff;
     }
 
-    .chart-wrap {
-      position: relative;
-      height: 280px;
+    canvas {
+      max-height: 300px;
     }
 
     .info-bar {
@@ -188,621 +193,425 @@
       padding: 20px;
       line-height: 2;
       color: #cbd5e1;
-      overflow-wrap: anywhere;
     }
 
     .footer {
       text-align: center;
       margin-top: 30px;
-      padding-bottom: 20px;
       color: #94a3b8;
-      font-size: 13px;
     }
 
     .error {
       color: #f87171;
     }
 
-    .bg-sejuk { background: #38bdf8; }
-    .bg-baik { background: #22c55e; }
-    .bg-sedang { background: #3b82f6; }
-    .bg-tidak-sehat { background: #eab308; }
-    .bg-sangat-tidak { background: #ef4444; }
-    .bg-berbahaya { background: #7c2d12; }
+    .bg-sejuk { background: #38bdf8 !important; }
+    .bg-baik { background: #22c55e !important; }
+    .bg-sedang { background: #3b82f6 !important; }
+    .bg-tidak-sehat { background: #eab308 !important; }
+    .bg-sangat-tidak { background: #ef4444 !important; }
+    .bg-berbahaya { background: #7c2d12 !important; }
 
-    @media (max-width: 600px) {
-      header {
-        padding: 25px 15px;
-      }
-
+    @media (max-width: 768px) {
       header h1 {
-        font-size: 1.4rem;
-      }
-
-      .container {
-        padding: 15px;
-      }
-
-      .status-box {
-        font-size: 17px;
+        font-size: 1.5rem;
       }
 
       .value {
-        font-size: 30px;
+        font-size: 32px;
       }
 
-      .ispu-panel {
-        padding: 18px;
+      .chart-section {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-
 <body>
-<header>
-  <h1>V-Air - Monitoring Kualitas Udara</h1>
-  <p>Sistem Pemantauan Kualitas Udara Real-Time</p>
-</header>
 
-<main class="container">
+  <header>
+    <h1>Dashboard Monitoring Kualitas Udara</h1>
+    <p></p>
+  </header>
 
-  <div id="statusBox" class="status-box menunggu">
-    Status: Menunggu data dari ThingSpeak...
-  </div>
+  <main class="container">
+    <div id="statusBox" class="status-box menunggu">
+      Status: Menunggu data dari ThingSpeak...
+    </div>
 
-  <div id="waktuPemanasan"
-       class="status-box menunggu"
-       style="font-size:16px; padding:15px;">
-    Memeriksa waktu pemanasan...
-  </div>
+    <section class="ispu-panel">
+      <h2>Indeks Parameter Lingkungan & Udara</h2>
+      <div class="ispu-grid">
 
-  <section class="ispu-panel">
-    <h2>Indikator Parameter Lingkungan dan Udara</h2>
-
-    <div class="ispu-grid">
-      <div>
-        <div class="ispu-title">
-          <span>Suhu</span>
-          <span id="ispu-txt-suhu">-</span>
+        <div>
+          <div class="ispu-title">
+            <span>Suhu</span>
+            <span id="ispu-txt-suhu">Menghitung...</span>
+          </div>
+          <div class="ispu-bar-container">
+            <div id="ispu-bar-suhu" class="ispu-bar-fill"></div>
+          </div>
+          <div class="ispu-labels">
+            <span style="color:#3b82f6">Sejuk (≤24°C)</span>
+            <span style="color:#22c55e">Normal</span>
+            <span style="color:#eab308">Hangat</span>
+            <span style="color:#ef4444">Panas (>32°C)</span>
+          </div>
         </div>
-        <div class="ispu-bar-container">
-          <div id="ispu-bar-suhu" class="ispu-bar-fill"></div>
+        
+        <div>
+          <div class="ispu-title">
+            <span>Partikel Debu</span>
+            <span id="ispu-txt-debu">Menghitung...</span>
+          </div>
+          <div class="ispu-bar-container">
+            <div id="ispu-bar-debu" class="ispu-bar-fill"></div>
+          </div>
+          <div class="ispu-labels">
+            <span style="color:#22c55e">Baik (0-50)</span>
+            <span style="color:#3b82f6">Sedang</span>
+            <span style="color:#eab308">Tidak Sehat</span>
+            <span style="color:#ef4444">Berbahaya (300+)</span>
+          </div>
         </div>
-        <div class="ispu-labels">
-          <span>Sejuk</span><span>Normal</span>
-          <span>Hangat</span><span>Panas</span>
+
+        <div>
+          <div class="ispu-title">
+            <span>Kualitas Udara (CO2)</span>
+            <span id="ispu-txt-mq135">Menghitung...</span>
+          </div>
+          <div class="ispu-bar-container">
+            <div id="ispu-bar-mq135" class="ispu-bar-fill"></div>
+          </div>
+          <div class="ispu-labels">
+            <span>Aman (0)</span>
+            <span style="color:#ef4444; text-align:right">Terdeteksi Polusi (1)</span>
+          </div>
         </div>
+
+        <div>
+          <div class="ispu-title">
+            <span>Karbon Monoksida</span>
+            <span id="ispu-txt-mq2">Menghitung...</span>
+          </div>
+          <div class="ispu-bar-container">
+            <div id="ispu-bar-mq2" class="ispu-bar-fill"></div>
+          </div>
+          <div class="ispu-labels">
+            <span>Aman (0)</span>
+            <span style="color:#ef4444; text-align:right">Terdeteksi Gas (1)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Suhu</h3>
+        <span class="value" id="suhu">-</span><span class="unit">°C</span>
       </div>
 
-      <div>
-        <div class="ispu-title">
-          <span>Partikel Debu</span>
-          <span id="ispu-txt-debu">-</span>
-        </div>
-        <div class="ispu-bar-container">
-          <div id="ispu-bar-debu" class="ispu-bar-fill"></div>
-        </div>
-        <div class="ispu-labels">
-          <span>Baik</span><span>Sedang</span>
-          <span>Tidak sehat</span><span>Berbahaya</span>
-        </div>
+      <div class="card">
+        <h3>Kelembapan</h3>
+        <span class="value" id="kelembapan">-</span><span class="unit">%</span>
       </div>
 
-      <div>
-        <div class="ispu-title">
-          <span>Deteksi MQ135</span>
-          <span id="ispu-txt-mq135">-</span>
-        </div>
-        <div class="ispu-bar-container">
-          <div id="ispu-bar-mq135" class="ispu-bar-fill"></div>
-        </div>
-        <div class="ispu-labels">
-          <span>Aman (0)</span><span>Bahaya (1)</span>
-        </div>
+      <div class="card">
+        <h3>MQ135 / CO2</h3>
+        <span class="value" id="mq135">-</span>
       </div>
 
-      <div>
-        <div class="ispu-title">
-          <span>Deteksi MQ2</span>
-          <span id="ispu-txt-mq2">-</span>
-        </div>
-        <div class="ispu-bar-container">
-          <div id="ispu-bar-mq2" class="ispu-bar-fill"></div>
-        </div>
-        <div class="ispu-labels">
-          <span>Aman (0)</span><span>Bahaya (1)</span>
-        </div>
+      <div class="card">
+        <h3>MQ2 / CO</h3>
+        <span class="value" id="mq2">-</span>
       </div>
-    </div>
-  </section>
 
-  <section class="grid">
-    <div class="card">
-      <h3>Suhu</h3>
-      <span class="value" id="suhu">-</span>
-      <span class="unit">°C</span>
-    </div>
+      <div class="card">
+        <h3>Partikel Debu GP2Y</h3>
+        <span class="value" id="debu">-</span><span class="unit">µg/m³</span>
+      </div>
+    </section>
 
-    <div class="card">
-      <h3>Kelembapan</h3>
-      <span class="value" id="kelembapan">-</span>
-      <span class="unit">%</span>
-    </div>
+    <section class="chart-section">
+      <div class="chart-card">
+        <h3>Grafik Suhu</h3>
+        <canvas id="chartSuhu"></canvas>
+      </div>
 
-    <div class="card">
-      <h3>MQ135</h3>
-      <span class="value" id="mq135">-</span>
-    </div>
+      <div class="chart-card">
+        <h3>Grafik Kelembapan</h3>
+        <canvas id="chartKelembapan"></canvas>
+      </div>
 
-    <div class="card">
-      <h3>MQ2</h3>
-      <span class="value" id="mq2">-</span>
-    </div>
+      <div class="chart-card">
+        <h3>Grafik Partikel Debu</h3>
+        <canvas id="chartDebu"></canvas>
+      </div>
 
-    <div class="card">
-      <h3>Partikel Debu GP2Y</h3>
-      <span class="value" id="debu">-</span>
-      <span class="unit">µg/m³</span>
-    </div>
-  </section>
+      <div class="chart-card">
+        <h3>Grafik Status</h3>
+        <canvas id="chartStatus"></canvas>
+      </div>
+    </section>
 
-  <section class="chart-section">
-    <div class="chart-card">
-      <h3>Grafik Suhu</h3>
-      <div class="chart-wrap"><canvas id="chartSuhu"></canvas></div>
+    <div class="info-bar">
+      <div><strong>Update terakhir:</strong> <span id="lastUpdate">-</span></div>
+      <div><strong>Channel ID:</strong> <span id="channelInfo">3400896</span></div>
+      <div id="message"></div>
     </div>
 
-    <div class="chart-card">
-      <h3>Grafik Kelembapan</h3>
-      <div class="chart-wrap"><canvas id="chartKelembapan"></canvas></div>
+    <div class="footer">
+      Data diperbarui otomatis setiap 20 detik dari ThingSpeak.
     </div>
+  </main>
 
-    <div class="chart-card">
-      <h3>Grafik Partikel Debu</h3>
-      <div class="chart-wrap"><canvas id="chartDebu"></canvas></div>
-    </div>
+  <script>
+    const CHANNEL_ID = "3400896";
+    const READ_API_KEY = "DRBVPJWIUNQSRVWC"; 
 
-    <div class="chart-card">
-      <h3>Grafik Status Bahaya</h3>
-      <div class="chart-wrap"><canvas id="chartStatus"></canvas></div>
-    </div>
-  </section>
+    const BASE_URL = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json`;
+    const RESULTS = 20;
+    const REFRESH_INTERVAL = 20000;
 
-  <div class="info-bar">
-    <div><strong>Jam saat ini:</strong> <span id="jamSekarang">-</span></div>
-    <div><strong>Update terakhir ThingSpeak:</strong>
-      <span id="lastUpdate">-</span>
-    </div>
-    <div><strong>Channel ID:</strong> <span>3400896</span></div>
-    <div id="message">Menyiapkan dashboard...</div>
-  </div>
+    const suhuEl = document.getElementById("suhu");
+    const kelembapanEl = document.getElementById("kelembapan");
+    const mq135El = document.getElementById("mq135");
+    const mq2El = document.getElementById("mq2");
+    const debuEl = document.getElementById("debu");
+    const statusBox = document.getElementById("statusBox");
+    const lastUpdateEl = document.getElementById("lastUpdate");
+    const messageEl = document.getElementById("message");
 
-  <div class="footer">
-    Data diambil dari ThingSpeak setiap 20 detik.
-  </div>
-</main>
+    const barSuhu = document.getElementById("ispu-bar-suhu");
+    const txtSuhu = document.getElementById("ispu-txt-suhu");
+    const barDebu = document.getElementById("ispu-bar-debu");
+    const txtDebu = document.getElementById("ispu-txt-debu");
+    const barMq135 = document.getElementById("ispu-bar-mq135");
+    const txtMq135 = document.getElementById("ispu-txt-mq135");
+    const barMq2 = document.getElementById("ispu-bar-mq2");
+    const txtMq2 = document.getElementById("ispu-txt-mq2");
 
-<script>
-  // ======================================
-  // KONFIGURASI THINGSPEAK
-  // ======================================
-  const CHANNEL_ID = "3400896";
-  const READ_API_KEY = "GANTI_DENGAN_READ_API_KEY_KAMU";
-
-  const BASE_URL =
-    `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json`;
-
-  const RESULTS = 20;
-  const REFRESH_INTERVAL = 20000;
-
-  // ======================================
-  // WAKTU PEMANASAN
-  // ======================================
-  const WAKTU_PEMANASAN = 5 * 60 * 1000;
-
-  // Versi sederhana: waktu dihitung sejak halaman pertama dibuka.
-  // Refresh browser akan memulai hitungan kembali.
-  const KUNCI_WAKTU = `v-air-start-${CHANNEL_ID}`;
-
-  let waktuMulaiWeb = Number(sessionStorage.getItem(KUNCI_WAKTU));
-
-  if (!waktuMulaiWeb || !Number.isFinite(waktuMulaiWeb)) {
-    waktuMulaiWeb = Date.now();
-    sessionStorage.setItem(KUNCI_WAKTU, String(waktuMulaiWeb));
-  }
-
-  // ======================================
-  // ELEMEN HTML
-  // ======================================
-  const $ = id => document.getElementById(id);
-
-  const suhuEl = $("suhu");
-  const kelembapanEl = $("kelembapan");
-  const mq135El = $("mq135");
-  const mq2El = $("mq2");
-  const debuEl = $("debu");
-
-  const statusBox = $("statusBox");
-  const waktuPemanasanEl = $("waktuPemanasan");
-  const lastUpdateEl = $("lastUpdate");
-  const jamSekarangEl = $("jamSekarang");
-  const messageEl = $("message");
-
-  let dataTerbaruTersedia = false;
-  let waktuDataTerbaru = 0;
-  let dataTerakhir = null;
-
-  // ======================================
-  // FORMAT DATA
-  // ======================================
-  function formatNumber(value, digit = 2) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number.toFixed(digit) : "-";
-  }
-
-  function formatDate(dateString) {
-    if (!dateString) return "-";
-
-    const date = new Date(dateString);
-
-    if (Number.isNaN(date.getTime())) return "-";
-
-    return date.toLocaleString("id-ID", {
-      timeZone: "Asia/Jakarta",
-      dateStyle: "medium",
-      timeStyle: "medium"
-    });
-  }
-
-  function buildUrl() {
-    const params = new URLSearchParams({
-      results: String(RESULTS
-      )
-    });
-
-    if (READ_API_KEY && !READ_API_KEY.startsWith("GANTI_")) {
-      params.append("api_key", READ_API_KEY);
+    function formatNumber(value, digit = 2) {
+      const number = Number(value);
+      if (Number.isNaN(number)) return "-";
+      return number.toFixed(digit);
     }
 
-    // Menghindari respons cache
-    params.append("_", String(Date.now()));
-
-    return `${BASE_URL}?${params.toString()}`;
-  }
-
-  // ======================================
-  // JAM DAN HITUNG MUNDUR
-  // ======================================
-  function updateJam() {
-    jamSekarangEl.textContent =
-      new Date().toLocaleString("id-ID", {
-        timeZone: "Asia/Jakarta",
+    function formatDate(dateString) {
+      if (!dateString) return "-";
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return dateString;
+      return date.toLocaleString("id-ID", {
         dateStyle: "medium",
         timeStyle: "medium"
       });
-  }
-
-  function sensorSiapMenurutWeb() {
-    return Date.now() - waktuMulaiWeb >= WAKTU_PEMANASAN;
-  }
-
-  function updateWaktuPemanasan() {
-    const sisa = WAKTU_PEMANASAN - (Date.now() - waktuMulaiWeb);
-
-    if (sisa > 0) {
-      const menit = Math.floor(sisa / 60000);
-      const detik = Math.floor((sisa % 60000) / 1000);
-
-      waktuPemanasanEl.textContent =
-        `Pemanasan awal: ${menit} menit ${detik} detik`;
-
-      waktuPemanasanEl.className = "status-box menunggu";
-    } else {
-      waktuPemanasanEl.textContent =
-        "Waktu tunggu web selesai";
-
-      waktuPemanasanEl.className = "status-box aman";
     }
 
-    updateJam();
-    updateStatus();
-  }
+    function buildUrl() {
+      const params = new URLSearchParams({ results: RESULTS });
+      if (READ_API_KEY) params.append("api_key", READ_API_KEY);
+      return `${BASE_URL}?${params.toString()}`;
+    }
 
-  // ======================================
-  // GRAFIK
-  // ======================================
-  function makeChart(canvasId, label, color = "#38bdf8") {
-    return new Chart($(canvasId).getContext("2d"), {
-      type: "line",
-      data: {
-        labels: [],
-        datasets: [{
-          label,
-          data: [],
-          borderWidth: 3,
-          tension: 0.3,
-          pointRadius: 3,
-          spanGaps: true,
-          borderColor: color,
-          backgroundColor: color + "26",
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false,
-        plugins: {
-          legend: {
-            labels: { color: "#cbd5e1" }
-          }
+    function makeChart(canvasId, label) {
+      const ctx = document.getElementById(canvasId).getContext("2d");
+      return new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [{
+            label,
+            data: [],
+            borderWidth: 3,
+            tension: 0.4,
+            pointRadius: 4,
+            fill: true,
+            borderColor: "#38bdf8",
+            backgroundColor: "rgba(56, 189, 248, 0.15)"
+          }]
         },
-        scales: {
-          x: {
-            ticks: { color: "#94a3b8", maxTicksLimit: 6 },
-            grid: { color: "#334155" }
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true
+            }
           },
-          y: {
-            beginAtZero: true,
-            ticks: { color: "#94a3b8" },
-            grid: { color: "#334155" }
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
-      }
-    });
-  }
-
-  const chartSuhu = makeChart("chartSuhu", "Suhu (°C)");
-  const chartKelembapan =
-    makeChart("chartKelembapan", "Kelembapan (%)", "#22c55e");
-  const chartDebu =
-    makeChart("chartDebu", "Debu (µg/m³)", "#eab308");
-  const chartStatus =
-    makeChart("chartStatus", "Status (0 Aman, 1 Bahaya)", "#ef4444");
-
-  function updateChart(chart, labels, values) {
-    chart.data.labels = labels;
-    chart.data.datasets[0].data = values;
-    chart.update("none");
-  }
-
-  // ======================================
-  // INDIKATOR
-  // ======================================
-  function setBar(id, txtId, persen, teks, warna) {
-    const bar = $(id);
-    bar.style.width = `${Math.max(0, Math.min(100, persen))}%`;
-    bar.style.background = warna;
-    $(txtId).textContent = teks;
-    $(txtId).style.color = warna;
-  }
-
-  function updateIspuBars(suhu, debu, mq135, mq2) {
-    let labelSuhu, warnaSuhu;
-
-    if (suhu <= 24) {
-      labelSuhu = "SEJUK";
-      warnaSuhu = "#38bdf8";
-    } else if (suhu <= 27) {
-      labelSuhu = "NORMAL";
-      warnaSuhu = "#22c55e";
-    } else if (suhu <= 32) {
-      labelSuhu = "HANGAT";
-      warnaSuhu = "#eab308";
-    } else {
-      labelSuhu = "PANAS";
-      warnaSuhu = "#ef4444";
-    }
-
-    setBar(
-      "ispu-bar-suhu",
-      "ispu-txt-suhu",
-      suhu / 40 * 100,
-      `${suhu.toFixed(1)} °C (${labelSuhu})`,
-      warnaSuhu
-    );
-
-    let labelDebu, warnaDebu;
-
-    if (debu <= 50) {
-      labelDebu = "BAIK";
-      warnaDebu = "#22c55e";
-    } else if (debu <= 100) {
-      labelDebu = "SEDANG";
-      warnaDebu = "#3b82f6";
-    } else if (debu <= 200) {
-      labelDebu = "MENINGKAT";
-      warnaDebu = "#eab308";
-    } else if (debu <= 300) {
-      labelDebu = "TINGGI";
-      warnaDebu = "#ef4444";
-    } else {
-      labelDebu = "SANGAT TINGGI";
-      warnaDebu = "#7c2d12";
-    }
-
-    setBar(
-      "ispu-bar-debu",
-      "ispu-txt-debu",
-      debu / 300 * 100,
-      `${debu.toFixed(1)} µg/m³ (${labelDebu})`,
-      warnaDebu
-    );
-
-    setBar(
-      "ispu-bar-mq135",
-      "ispu-txt-mq135",
-      mq135 === 1 ? 100 : 0,
-      mq135 === 1 ? "TERDETEKSI (1)" : "Aman (0)",
-      mq135 === 1 ? "#ef4444" : "#22c55e"
-    );
-
-    setBar(
-      "ispu-bar-mq2",
-      "ispu-txt-mq2",
-      mq2 === 1 ? 100 : 0,
-      mq2 === 1 ? "TERDETEKSI (1)" : "Aman (0)",
-      mq2 === 1 ? "#ef4444" : "#22c55e"
-    );
-  }
-
-  // ======================================
-  // STATUS DASHBOARD
-  // ======================================
-  function updateStatus() {
-    if (!dataTerbaruTersedia || !dataTerakhir) {
-      statusBox.textContent = "Status: Menunggu data ThingSpeak";
-      statusBox.className = "status-box menunggu";
-      return;
-    }
-
-    if (!sensorSiapMenurutWeb()) {
-      statusBox.textContent =
-        "Status: Pemanasan awal - alarm web belum aktif";
-      statusBox.className = "status-box menunggu";
-      return;
-    }
-
-    const { status, mq135, mq2, debu } = dataTerakhir;
-
-    if (status === 1 || mq135 === 1 || mq2 === 1 || debu > 150) {
-      statusBox.textContent = "Status: BAHAYA - Kualitas Udara Buruk";
-      statusBox.className = "status-box bahaya";
-    } else {
-      statusBox.textContent = "Status: Aman";
-      statusBox.className = "status-box aman";
-    }
-  }
-
-  // ======================================
-  // AMBIL DATA THINGSPEAK
-  // ======================================
-  async function ambilDataThingSpeak() {
-    try {
-      messageEl.textContent = "Mengambil data dari ThingSpeak...";
-      messageEl.className = "";
-
-      const response = await fetch(buildUrl(), {
-        cache: "no-store"
       });
+    }
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+    const chartSuhu = makeChart("chartSuhu", "Suhu (°C)");
+    const chartKelembapan = makeChart("chartKelembapan", "Kelembapan (%)");
+    const chartDebu = makeChart("chartDebu", "Partikel Debu (µg/m³)");
+    const chartStatus = makeChart("chartStatus", "Status (0 Aman, 1 Bahaya)");
 
-      const data = await response.json();
-      const feeds = data.feeds || [];
+    function updateChart(chart, labels, values) {
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = values;
+      chart.update();
+    }
 
-      if (feeds.length === 0) {
-        dataTerbaruTersedia = false;
-        updateStatus();
-        messageEl.textContent = "Belum ada data di channel ThingSpeak.";
-        return;
-      }
+    function updateIspuBars(nilaiSuhu, nilaiDebu, statusMq135, statusMq2) {
+      // 1. Bar Indikator Suhu
+      let persenSuhu = (nilaiSuhu / 40) * 100;
+      if (persenSuhu > 100) persenSuhu = 100;
+      if (persenSuhu < 0) persenSuhu = 0;
+      
+      barSuhu.style.width = `${persenSuhu}%`;
+      barSuhu.className = "ispu-bar-fill";
 
-      const latest = feeds[feeds.length - 1];
-
-      const suhu = Number(latest.field1);
-      const kelembapan = Number(latest.field2);
-      const mq135 = Number(latest.field3);
-      const mq2 = Number(latest.field4);
-      const debu = Number(latest.field6);
-      const status = Number(latest.field7);
-
-      if (
-        !latest.created_at ||
-        ![suhu, kelembapan, mq135, mq2, debu, status].every(
-          Number.isFinite
-        )
-      ) {
-        throw new Error("Data sensor tidak lengkap atau tidak valid.");
-      }
-
-      suhuEl.textContent = formatNumber(suhu);
-      kelembapanEl.textContent = formatNumber(kelembapan);
-      mq135El.textContent = mq135;
-      mq2El.textContent = mq2;
-      debuEl.textContent = formatNumber(debu);
-
-      lastUpdateEl.textContent = formatDate(latest.created_at);
-
-      dataTerbaruTersedia = true;
-      waktuDataTerbaru = new Date(latest.created_at).getTime();
-
-      dataTerakhir = { suhu, kelembapan, mq135, mq2, debu, status };
-
-      updateIspuBars(suhu, debu, mq135, mq2);
-      updateStatus();
-
-      const labels = feeds.map(feed => {
-        const date = new Date(feed.created_at);
-        return Number.isNaN(date.getTime())
-          ? "-"
-          : date.toLocaleTimeString("id-ID", {
-              timeZone: "Asia/Jakarta",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit"
-            });
-      });
-
-      updateChart(
-        chartSuhu,
-        labels,
-        feeds.map(f => f.field1 === null ? null : Number(f.field1))
-      );
-
-      updateChart(
-        chartKelembapan,
-        labels,
-        feeds.map(f => f.field2 === null ? null : Number(f.field2))
-      );
-
-      updateChart(
-        chartDebu,
-        labels,
-        feeds.map(f => f.field6 === null ? null : Number(f.field6))
-      );
-
-      updateChart(
-        chartStatus,
-        labels,
-        feeds.map(f => f.field7 === null ? null : Number(f.field7))
-      );
-
-      // Periksa apakah data ThingSpeak masih baru
-      const umurData = Date.now() - waktuDataTerbaru;
-
-      if (umurData > 120000) {
-        messageEl.className = "error";
-        messageEl.textContent =
-          "Peringatan: data sensor terakhir lebih dari 2 menit. Periksa ESP8266 dan koneksi Wi-Fi.";
+      if (nilaiSuhu <= 24) {
+        barSuhu.classList.add("bg-sejuk");
+        txtSuhu.innerText = `${nilaiSuhu.toFixed(1)} °C (SEJUK)`;
+        txtSuhu.style.color = "#3b82f6";
+      } else if (nilaiSuhu <= 27) {
+        barSuhu.classList.add("bg-baik");
+        txtSuhu.innerText = `${nilaiSuhu.toFixed(1)} °C (NORMAL)`;
+        txtSuhu.style.color = "#22c55e";
+      } else if (nilaiSuhu <= 32) {
+        barSuhu.classList.add("bg-tidak-sehat");
+        txtSuhu.innerText = `${nilaiSuhu.toFixed(1)} °C (HANGAT)`;
+        txtSuhu.style.color = "#eab308";
       } else {
-        messageEl.className = "";
-        messageEl.textContent = "Data berhasil diperbarui.";
+        barSuhu.classList.add("bg-sangat-tidak");
+        txtSuhu.innerText = `${nilaiSuhu.toFixed(1)} °C (PANAS / EKSTREM)`;
+        txtSuhu.style.color = "#ef4444";
       }
 
-    } catch (error) {
-      console.error(error);
-      statusBox.textContent = "Status: Gagal mengambil data";
-      statusBox.className = "status-box menunggu";
-      messageEl.className = "error";
-      messageEl.textContent =
-        "Gagal mengambil data. Periksa internet, Read API Key, dan channel ThingSpeak.";
+      // 2. Bar Debu
+      let persenDebu = (nilaiDebu / 300) * 100;
+      if (persenDebu > 100) persenDebu = 100;
+      if (persenDebu < 0) persenDebu = 0;
+      
+      barDebu.style.width = `${persenDebu}%`;
+      barDebu.className = "ispu-bar-fill";
+
+      if (nilaiDebu <= 50) {
+        barDebu.classList.add("bg-baik");
+        txtDebu.innerText = `${nilaiDebu.toFixed(1)} µg/m³ (BAIK)`;
+        txtDebu.style.color = "#22c55e";
+      } else if (nilaiDebu <= 100) {
+        barDebu.classList.add("bg-sedang");
+        txtDebu.innerText = `${nilaiDebu.toFixed(1)} µg/m³ (SEDANG)`;
+        txtDebu.style.color = "#3b82f6";
+      } else if (nilaiDebu <= 200) {
+        barDebu.classList.add("bg-tidak-sehat");
+        txtDebu.innerText = `${nilaiDebu.toFixed(1)} µg/m³ (TIDAK SEHAT)`;
+        txtDebu.style.color = "#eab308";
+      } else if (nilaiDebu <= 300) {
+        barDebu.classList.add("bg-sangat-tidak");
+        txtDebu.innerText = `${nilaiDebu.toFixed(1)} µg/m³ (SANGAT TIDAK SEHAT)`;
+        txtDebu.style.color = "#ef4444";
+      } else {
+        barDebu.classList.add("bg-berbahaya");
+        txtDebu.innerText = `${nilaiDebu.toFixed(1)} µg/m³ (BERBAHAYA)`;
+        txtDebu.style.color = "#7c2d12";
+      }
+
+      // 3. Bar MQ135
+      barMq135.className = "ispu-bar-fill";
+      if (statusMq135 === 1) {
+        barMq135.style.width = "100%";
+        barMq135.classList.add("bg-sangat-tidak");
+        txtMq135.innerText = "TERDETEKSI POLUSI / CO2 BURUK";
+        txtMq135.style.color = "#ef4444";
+      } else {
+        barMq135.style.width = "0%";
+        txtMq135.innerText = "Aman";
+        txtMq135.style.color = "#22c55e";
+      }
+
+      // 4. Bar MQ2
+      barMq2.className = "ispu-bar-fill";
+      if (statusMq2 === 1) {
+        barMq2.style.width = "100%";
+        barMq2.classList.add("bg-sangat-tidak");
+        txtMq2.innerText = "TERDETEKSI ASAP / GAS BOCOR";
+        txtMq2.style.color = "#ef4444";
+      } else {
+        barMq2.style.width = "0%";
+        txtMq2.innerText = "Aman";
+        txtMq2.style.color = "#22c55e";
+      }
     }
-  }
 
-  // ======================================
-  // JALANKAN DASHBOARD
-  // ======================================
-  updateJam();
-  updateWaktuPemanasan();
+    async function ambilDataThingSpeak() {
+      try {
+        messageEl.textContent = "Mengambil data dari ThingSpeak...";
+        messageEl.className = "";
 
-  setInterval(updateJam, 1000);
-  setInterval(updateWaktuPemanasan, 1000);
+        const response = await fetch(buildUrl(), { cache: "no-store" });
 
-  ambilDataThingSpeak();
-  setInterval(ambilDataThingSpeak, REFRESH_INTERVAL);
-</script>
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        const feeds = data.feeds || [];
+
+        if (feeds.length === 0) {
+          statusBox.textContent = "Status: Belum ada data";
+          statusBox.className = "status-box menunggu";
+          messageEl.textContent = "Belum ada data yang masuk ke channel ThingSpeak.";
+          return;
+        }
+
+        const latest = feeds[feeds.length - 1];
+
+        const suhu = Number(latest.field1 || 0);
+        const kelembapan = Number(latest.field2 || 0);
+        const mq135 = Number(latest.field3 || 0);
+        const mq2 = Number(latest.field4 || 0);
+        const debu = Number(latest.field6 || 0);
+        const status = Number(latest.field7 || 0);
+
+        suhuEl.textContent = formatNumber(suhu);
+        kelembapanEl.textContent = formatNumber(kelembapan);
+        mq135El.textContent = mq135;
+        mq2El.textContent = mq2;
+        debuEl.textContent = formatNumber(debu);
+        lastUpdateEl.textContent = formatDate(latest.created_at);
+
+        // Memperbaiki urutan parameter fungsi update 4 bar
+        updateIspuBars(suhu, debu, mq135, mq2);
+
+        if (status === 1 || mq135 === 1 || mq2 === 1 || debu > 150) {
+          statusBox.textContent = "Status: Bahaya, Kualitas Udara Buruk";
+          statusBox.className = "status-box bahaya";
+        } else {
+          statusBox.textContent = "Status: Aman";
+          statusBox.className = "status-box aman";
+        }
+
+        const labels = feeds.map(feed => {
+          const date = new Date(feed.created_at);
+          return date.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        });
+
+        updateChart(chartSuhu, labels, feeds.map(feed => Number(feed.field1 || 0)));
+        updateChart(chartKelembapan, labels, feeds.map(feed => Number(feed.field2 || 0)));
+        updateChart(chartDebu, labels, feeds.map(feed => Number(feed.field6 || 0)));
+        updateChart(chartStatus, labels, feeds.map(feed => Number(feed.field7 || 0)));
+
+        messageEl.textContent = "Data berhasil diperbarui.";
+      } catch (error) {
+        console.error(error);
+        statusBox.textContent = "Status: Gagal mengambil data";
+        statusBox.className = "status-box menunggu";
+        messageEl.className = "error";
+        messageEl.textContent = "Gagal mengambil data. Pastikan status jaringan stabil dan konfigurasi API Key benar.";
+      }
+    }
+
+    ambilDataThingSpeak();
+    setInterval(ambilDataThingSpeak, REFRESH_INTERVAL);
+  </script>
 </body>
 </html>
